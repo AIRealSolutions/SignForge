@@ -2,22 +2,21 @@
   "name": "signforge",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@10.13.1",
+  "packageManager": "npm@10.9.2",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "scripts": {
-    "dev": "turbo dev",
-    "build": "turbo build",
-    "lint": "turbo lint",
-    "typecheck": "turbo typecheck",
-    "test": "turbo test",
+    "dev": "npm run dev --workspace=@signforge/web",
+    "build": "npm run build --workspace=@signforge/web",
+    "lint": "npm run lint --workspace=@signforge/web",
+    "typecheck": "npm run typecheck --workspace=@signforge/web",
+    "test": "npm run test --workspace=@signforge/web",
     "format": "prettier --write ."
   },
   "devDependencies": {
     "prettier": "latest",
-    "turbo": "latest",
     "typescript": "latest"
   }
 }
