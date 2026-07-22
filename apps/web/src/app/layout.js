@@ -9,6 +9,7 @@ const navigation = [
   ["Dashboard", "/dashboard"],
   ["Customers", "/customers"],
   ["Quotes", "/quotes"],
+  ["Design", "/design"],
   ["Production", "/dashboard#production"],
   ["Inventory", "/dashboard#inventory"],
 ];
