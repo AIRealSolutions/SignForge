@@ -10,7 +10,7 @@ const navigation = [
   ["Customers", "/customers"],
   ["Quotes", "/quotes"],
   ["Design", "/design"],
-  ["Production", "/dashboard#production"],
+  ["Virtual Cutter", "/production/virtual-cutter"],
   ["Inventory", "/dashboard#inventory"],
 ];
 
