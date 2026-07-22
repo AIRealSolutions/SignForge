@@ -1,27 +1,39 @@
 const modules = [
   {
+    title: "Design Studio",
+    description: "Create yard signs, riders, decals, apparel graphics, and cut-ready SVG artwork.",
+    href: "/design",
+    action: "Launch designer",
+  },
+  {
     title: "Customers",
     description: "Manage businesses, brokerages, agents, contacts, and saved brand assets.",
+    href: "/customers",
+    action: "Open customers",
   },
   {
     title: "Quotes",
     description: "Price signs, apparel, and sublimation jobs with repeatable product rules.",
+    href: "/quotes",
+    action: "Build a quote",
   },
   {
     title: "Artwork & Proofs",
     description: "Upload artwork, track revisions, collect comments, and record approvals.",
+    href: "/design",
+    action: "Open artwork",
   },
   {
     title: "Production",
     description: "Move jobs through design, cutting, printing, pressing, finishing, and delivery.",
+    href: "/dashboard#production",
+    action: "View production",
   },
   {
     title: "Inventory",
     description: "Track vinyl, substrates, garments, inks, blanks, and reorder points.",
-  },
-  {
-    title: "Machine Bridge",
-    description: "Prepare for direct local control of the Roland CAMM-1 GS-24.",
+    href: "/dashboard#inventory",
+    action: "View inventory",
   },
 ];
 
@@ -36,11 +48,11 @@ export default function HomePage() {
           production, inventory, and reordering into one dependable system.
         </p>
         <div className="heroActions">
-          <a className="button primary" href="#modules">
-            Explore the MVP
+          <a className="button primary" href="/design">
+            Launch Design Studio
           </a>
-          <a className="button secondary" href="https://github.com/AIRealSolutions/SignForge/blob/main/docs/product-requirements.md">
-            Product requirements
+          <a className="button secondary" href="/quotes">
+            Create New Quote
           </a>
         </div>
       </section>
@@ -55,15 +67,18 @@ export default function HomePage() {
 
       <section id="modules" className="modules">
         <div className="sectionHeading">
-          <p className="eyebrow">MVP foundation</p>
-          <h2>The complete job workflow</h2>
+          <p className="eyebrow">SignForge workspace</p>
+          <h2>Start with the tool you need</h2>
         </div>
         <div className="grid">
           {modules.map((module) => (
-            <article className="card" key={module.title}>
-              <h3>{module.title}</h3>
-              <p>{module.description}</p>
-            </article>
+            <a className="card moduleLinkCard" href={module.href} key={module.title}>
+              <div>
+                <h3>{module.title}</h3>
+                <p>{module.description}</p>
+              </div>
+              <strong>{module.action} →</strong>
+            </a>
           ))}
         </div>
       </section>
