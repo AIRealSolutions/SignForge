@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://airealsolutions.com/schemas/signforge-production-job-v0.1.json",
+  "title": "SignForge Production Job",
+  "description": "Versioned contract exchanged between SignForge Cloud, the virtual cutter, and the Linux production engine.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "jobId",
+    "createdAt",
+    "approval",
+    "customer",
+    "product",
+    "artwork",
+    "material",
+    "production",
+    "machine"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "0.1"
+    },
+    "jobId": {
+      "type": "string",
+      "pattern": "^SF-[A-Z0-9-]{4,40}$"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "dueAt": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "approvedArtworkVersion"],
+      "properties": {
+        "status": {
+          "enum": ["draft", "awaiting_approval", "approved", "rejected"]
+        },
+        "approvedArtworkVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "approvedAt": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "approvedBy": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "customer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["customerId", "displayName"],
+      "properties": {
+        "customerId": { "type": "string", "minLength": 1 },
+        "displayName": { "type": "string", "minLength": 1 },
+        "organizationName": { "type": ["string", "null"] }
+      }
+    },
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["productType", "name", "widthInches", "heightInches", "quantity"],
+      "properties": {
+        "productType": {
+          "enum": ["vinyl_cut", "htv_cut", "print_cut", "screen_print", "sublimation"]
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "widthInches": { "type": "number", "exclusiveMinimum": 0 },
+        "heightInches": { "type": "number", "exclusiveMinimum": 0 },
+        "quantity": { "type": "integer", "minimum": 1 },
+        "notes": { "type": ["string", "null"] }
+      }
+    },
+    "artwork": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["format", "version", "source", "sha256", "physicalWidthInches", "physicalHeightInches"],
+      "properties": {
+        "format": { "enum": ["svg"] },
+        "version": { "type": "integer", "minimum": 1 },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind"],
+          "properties": {
+            "kind": { "enum": ["inline", "url", "local_path"] },
+            "inlineSvg": { "type": ["string", "null"] },
+            "url": { "type": ["string", "null"], "format": "uri" },
+            "localPath": { "type": ["string", "null"] }
+          }
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{64}$"
+        },
+        "physicalWidthInches": { "type": "number", "exclusiveMinimum": 0 },
+        "physicalHeightInches": { "type": "number", "exclusiveMinimum": 0 },
+        "colorCount": { "type": "integer", "minimum": 1 },
+        "textOutlined": { "type": "boolean" },
+        "strokesExpanded": { "type": "boolean" }
+      }
+    },
+    "material": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["category", "brand", "series", "colorName", "rollWidthInches"],
+      "properties": {
+        "category": { "enum": ["adhesive_vinyl", "heat_transfer_vinyl", "mask", "paper", "other"] },
+        "brand": { "type": "string", "minLength": 1 },
+        "series": { "type": "string", "minLength": 1 },
+        "colorName": { "type": "string", "minLength": 1 },
+        "colorHex": { "type": ["string", "null"], "pattern": "^#[0-9A-Fa-f]{6}$" },
+        "rollWidthInches": { "type": "number", "exclusiveMinimum": 0 },
+        "inventoryItemId": { "type": ["string", "null"] }
+      }
+    },
+    "production": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["copies", "mirror", "weedBorder", "registrationMarks", "orientation", "spacingInches"],
+      "properties": {
+        "copies": { "type": "integer", "minimum": 1 },
+        "mirror": { "type": "boolean" },
+        "weedBorder": { "type": "boolean" },
+        "weedBorderMarginInches": { "type": "number", "minimum": 0 },
+        "registrationMarks": { "type": "boolean" },
+        "orientation": { "enum": ["as_designed", "rotate_90", "auto"] },
+        "spacingInches": { "type": "number", "minimum": 0 },
+        "operatorConfirmationRequired": { "type": "boolean", "default": true }
+      }
+    },
+    "machine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetType", "profileId", "settings"],
+      "properties": {
+        "targetType": { "enum": ["virtual_cutter", "roland_gs24", "unassigned"] },
+        "profileId": { "type": "string", "minLength": 1 },
+        "settings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["speedCmPerSecond", "forceGrams", "bladeOffsetMm"],
+          "properties": {
+            "speedCmPerSecond": { "type": "number", "exclusiveMinimum": 0 },
+            "forceGrams": { "type": "number", "minimum": 0 },
+            "bladeOffsetMm": { "type": "number", "minimum": 0 },
+            "passes": { "type": "integer", "minimum": 1, "default": 1 }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}
