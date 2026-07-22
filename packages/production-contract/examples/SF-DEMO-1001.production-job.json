@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "0.1",
+  "jobId": "SF-DEMO-1001",
+  "createdAt": "2026-07-21T20:30:00-04:00",
+  "dueAt": null,
+  "approval": {
+    "status": "approved",
+    "approvedArtworkVersion": 1,
+    "approvedAt": "2026-07-21T20:25:00-04:00",
+    "approvedBy": "Marc Spencer"
+  },
+  "customer": {
+    "customerId": "customer-lightkeeper-realty",
+    "displayName": "Marc Spencer",
+    "organizationName": "Lightkeeper Realty"
+  },
+  "product": {
+    "productType": "vinyl_cut",
+    "name": "18 × 24 Open House Directional",
+    "widthInches": 24,
+    "heightInches": 18,
+    "quantity": 1,
+    "notes": "Phase 1 production contract demonstration job."
+  },
+  "artwork": {
+    "format": "svg",
+    "version": 1,
+    "source": {
+      "kind": "inline",
+      "inlineSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24in\" height=\"18in\" viewBox=\"0 0 960 720\"><rect x=\"80\" y=\"80\" width=\"800\" height=\"560\" fill=\"none\" stroke=\"#000000\" stroke-width=\"4\"/><path d=\"M180 360 H650 V280 L820 360 L650 440 V360 Z\" fill=\"none\" stroke=\"#000000\" stroke-width=\"4\"/></svg>",
+      "url": null,
+      "localPath": null
+    },
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "physicalWidthInches": 24,
+    "physicalHeightInches": 18,
+    "colorCount": 1,
+    "textOutlined": true,
+    "strokesExpanded": false
+  },
+  "material": {
+    "category": "adhesive_vinyl",
+    "brand": "ORAFOL",
+    "series": "Oracal 651",
+    "colorName": "White",
+    "colorHex": "#FFFFFF",
+    "rollWidthInches": 24,
+    "inventoryItemId": null
+  },
+  "production": {
+    "copies": 1,
+    "mirror": false,
+    "weedBorder": true,
+    "weedBorderMarginInches": 0.25,
+    "registrationMarks": false,
+    "orientation": "as_designed",
+    "spacingInches": 0.25,
+    "operatorConfirmationRequired": true
+  },
+  "machine": {
+    "targetType": "virtual_cutter",
+    "profileId": "virtual-gs24-default",
+    "settings": {
+      "speedCmPerSecond": 15,
+      "forceGrams": 90,
+      "bladeOffsetMm": 0.25,
+      "passes": 1
+    }
+  },
+  "metadata": {
+    "sourceApplication": "SignForge Design Studio",
+    "orderId": "ORDER-DEMO-1001"
+  }
+}
