@@ -7,8 +7,8 @@ export const metadata = {
 
 const navigation = [
   ["Dashboard", "/dashboard"],
-  ["Customers", "/dashboard#customers"],
-  ["Quotes", "/dashboard#quotes"],
+  ["Customers", "/customers"],
+  ["Quotes", "/quotes"],
   ["Production", "/dashboard#production"],
   ["Inventory", "/dashboard#inventory"],
 ];
@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
               <a href={href} key={label}>{label}</a>
             ))}
           </nav>
-          <a className="button primary compact" href="/dashboard#new-job">New job</a>
+          <a className="button primary compact" href="/quotes">New quote</a>
         </header>
         {children}
       </body>
