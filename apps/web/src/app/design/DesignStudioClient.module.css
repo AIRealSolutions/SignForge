@@ -1,0 +1,135 @@
+:global(.studioStatus) {
+  margin: .35rem 0 0;
+  color: #7f8998;
+  font-size: .78rem;
+}
+
+:global(.phaseOneStudio) {
+  min-height: calc(100vh - 10.5rem);
+}
+
+:global(.interactiveStage) {
+  min-height: 620px;
+  touch-action: none;
+  user-select: none;
+}
+
+:global(.interactiveCanvas) {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  background: #111827;
+  transition: width .2s ease, transform .2s ease;
+}
+
+:global(.safeAreaGuide) {
+  position: absolute;
+  inset: 5%;
+  z-index: 1;
+  border: 2px dashed rgba(255, 255, 255, .28);
+  pointer-events: none;
+}
+
+:global(.canvasObject) {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: move;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1;
+  font-weight: 900;
+  touch-action: none;
+}
+
+:global(.canvasObject:hover) {
+  outline: 1px dashed rgba(255, 255, 255, .55);
+}
+
+:global(.selectedObject) {
+  outline: 2px solid #60a5fa !important;
+  outline-offset: 3px;
+}
+
+:global(.resizeHandle) {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #fff;
+  background: #2563eb;
+  border-radius: 2px;
+}
+
+:global(.handleNW) { left: -8px; top: -8px; }
+:global(.handleNE) { right: -8px; top: -8px; }
+:global(.handleSW) { left: -8px; bottom: -8px; }
+:global(.handleSE) { right: -8px; bottom: -8px; }
+
+:global(.cssArrow) {
+  position: relative;
+  display: block;
+  width: 72%;
+  height: 34%;
+  border-radius: 4px;
+}
+
+:global(.cssArrow::after) {
+  position: absolute;
+  top: 50%;
+  right: -28%;
+  width: 0;
+  height: 0;
+  border-top: 26px solid transparent;
+  border-bottom: 26px solid transparent;
+  border-left: 44px solid currentColor;
+  color: inherit;
+  content: "";
+  transform: translateY(-50%);
+}
+
+:global(.shapeObject .cssArrow) {
+  color: inherit;
+}
+
+:global(.propertyForm) {
+  display: grid;
+  gap: .15rem;
+}
+
+:global(.layerButton) {
+  width: 100%;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+:global(.selectedLayer) {
+  border-color: #60a5fa;
+  background: rgba(96, 165, 250, .1);
+}
+
+:global(.visibility) {
+  cursor: pointer;
+}
+
+:global(.activeControl) {
+  border-color: var(--accent) !important;
+  background: rgba(245, 158, 11, .12) !important;
+  color: var(--text) !important;
+}
+
+:global(.dangerTool:hover) {
+  border-color: rgba(248, 113, 113, .55) !important;
+  background: rgba(248, 113, 113, .1) !important;
+}
+
+@media (max-width: 900px) {
+  :global(.interactiveStage) { min-height: 520px; }
+}
+
+@media (max-width: 640px) {
+  :global(.interactiveStage) { min-height: 390px; }
+  :global(.canvasObject) { font-size: 16px !important; }
+}
