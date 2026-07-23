@@ -1,6 +1,6 @@
 # SignForge Engine
 
-SignForge Engine is the Linux and Raspberry Pi production component for SignForge. Version 0.1 accepts the shared production-job JSON format, validates approved vinyl-cut jobs, maintains a simple local file queue, and runs a virtual simulation summary.
+SignForge Engine is the Linux and Raspberry Pi production component for SignForge. Version 0.2 accepts the shared production-job JSON format, validates approved vinyl-cut jobs, stores them in SQLite, records durable job-state history, and runs a virtual simulation summary.
 
 It deliberately does **not** send USB commands to a physical cutter.
 
@@ -44,25 +44,64 @@ From the `engine` directory:
   ../packages/production-contract/examples/SF-DEMO-1001.production-job.json
 
 ./target/release/signforge-engine queue
-
 ./target/release/signforge-engine validate SF-DEMO-1001
-
 ./target/release/signforge-engine simulate SF-DEMO-1001
+./target/release/signforge-engine history SF-DEMO-1001
 ```
 
-By default, imported jobs are stored in:
+Change a durable queue state manually during testing:
+
+```bash
+./target/release/signforge-engine set-state SF-DEMO-1001 queued
+./target/release/signforge-engine set-state SF-DEMO-1001 operator-approved
+./target/release/signforge-engine set-state SF-DEMO-1001 completed
+```
+
+## Local database
+
+By default, the engine creates:
 
 ```text
-engine/.signforge/jobs/
+engine/.signforge/signforge.db
 ```
 
-A different location can be selected with:
+The SQLite database uses WAL journaling for resilience and currently contains:
+
+- `jobs`
+- `job_history`
+- `machines`
+- `materials`
+- `settings`
+
+A different appliance data location can be selected with:
 
 ```bash
 signforge-engine --data-dir /var/lib/signforge status
 ```
 
-## Version 0.1 safety boundaries
+For a production Raspberry Pi, `/var/lib/signforge` is the recommended eventual location.
+
+## Durable job states
+
+The engine supports:
+
+```text
+imported
+validated
+queued
+ready
+simulating
+operator_approved
+running
+paused
+completed
+failed
+canceled
+```
+
+Every state change is timestamped in `job_history`. This gives the future local dashboard, cloud synchronization service, and machine drivers one dependable source of truth.
+
+## Version 0.2 safety boundaries
 
 - Only schema version `0.1` is accepted.
 - Only approved `vinyl_cut` jobs are accepted.
@@ -75,10 +114,13 @@ signforge-engine --data-dir /var/lib/signforge status
 
 ## Next milestone
 
-The next milestone replaces the file-folder queue with SQLite and adds durable job states:
+The next milestone adds a fake plotter driver. It will consume a normalized motion plan and write commands such as these to a log file:
 
 ```text
-downloaded → validated → ready → running → paused → completed / failed
+MOVE 10.000 10.000
+BLADE_DOWN
+CUT 50.000 10.000
+BLADE_UP
 ```
 
-After that, a fake driver will write the exact planned movements to a log file before any real Roland GS-24 communication is attempted.
+The same machine-independent plan will later feed both the virtual simulator and the Roland GS-24 adapter.
